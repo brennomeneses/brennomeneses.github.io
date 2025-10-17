@@ -1,0 +1,221 @@
+@import "tailwindcss";
+
+@theme {
+  /* Container */
+  --container-center: true;
+  --container-padding: 2rem;
+  --container-2xl: 1400px;
+
+  /* Colors - Pip-Boy Green Monochrome Theme */
+  --color-background: oklch(0% 0 0);
+  --color-foreground: oklch(87.82% 0.295 142.5);
+  
+  --color-card: oklch(21.49% 0 0);
+  --color-card-foreground: oklch(87.82% 0.295 142.5);
+  
+  --color-popover: oklch(16.12% 0 0);
+  --color-popover-foreground: oklch(87.82% 0.295 142.5);
+  
+  --color-primary: oklch(87.82% 0.295 142.5);
+  --color-primary-foreground: oklch(0% 0 0);
+  
+  --color-secondary: oklch(39.15% 0.177 142.5);
+  --color-secondary-foreground: oklch(87.82% 0.295 142.5);
+  
+  --color-muted: oklch(31.32% 0.148 142.5);
+  --color-muted-foreground: oklch(62.83% 0.207 142.5);
+  
+  --color-accent: oklch(70.49% 0.236 142.5);
+  --color-accent-foreground: oklch(98.91% 0.295 142.5);
+  
+  --color-destructive: oklch(62.8% 0.257 29.234);
+  --color-destructive-foreground: oklch(87.82% 0.295 142.5);
+  
+  --color-border: oklch(54.66% 0.189 142.5);
+  --color-input: oklch(47.32% 0.177 142.5);
+  --color-ring: oklch(87.82% 0.295 142.5);
+
+  /* Custom Pip-Boy colors */
+  --color-pipboy-green: oklch(87.82% 0.295 142.5);
+  --color-pipboy-green-dark: oklch(39.15% 0.177 142.5);
+  --color-pipboy-green-darker: oklch(31.32% 0.148 142.5);
+  --color-pipboy-glow: oklch(87.82% 0.295 142.5);
+
+  /* Sidebar colors */
+  --color-sidebar-background: oklch(16.12% 0 0);
+  --color-sidebar-foreground: oklch(87.82% 0.295 142.5);
+  --color-sidebar-primary: oklch(87.82% 0.295 142.5);
+  --color-sidebar-primary-foreground: oklch(0% 0 0);
+  --color-sidebar-accent: oklch(70.49% 0.236 142.5);
+  --color-sidebar-accent-foreground: oklch(98.91% 0.295 142.5);
+  --color-sidebar-border: oklch(54.66% 0.189 142.5);
+  --color-sidebar-ring: oklch(87.82% 0.295 142.5);
+
+  /* Border Radius */
+  --radius: 0rem;
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Font Family */
+  --font-family-mono: "Share Tech Mono", "Courier New", monospace;
+
+  /* Animations */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-flicker: flicker 3s infinite;
+  --animate-scanline: scanline 8s linear infinite;
+  --animate-pulse-glow: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Keyframes */
+@keyframes accordion-down {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+
+@keyframes flicker {
+  0%, 100% {
+    opacity: 0.97;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes scanline {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px var(--color-pipboy-glow), inset 0 0 10px var(--color-pipboy-glow);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--color-pipboy-glow), inset 0 0 15px var(--color-pipboy-glow);
+  }
+}
+
+@keyframes crt-flicker {
+  0%, 100% {
+    opacity: 0.97;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Base Styles */
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-family-mono);
+  position: relative;
+}
+
+/* CRT Curvature Effect */
+.crt-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.crt-container::before {
+  content: "";
+  position: fixed;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.crt-container::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 0, 0.03) 0px,
+    transparent 1px,
+    transparent 2px,
+    rgba(0, 255, 0, 0.03) 3px
+  );
+  pointer-events: none;
+  z-index: 9998;
+  animation: crt-flicker 0.15s infinite;
+}
+
+/* CRT Screen Effect */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 255, 0, 0.05) 0px,
+    transparent 1px,
+    transparent 2px,
+    rgba(0, 255, 0, 0.05) 3px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  animation: scanline 8s linear infinite;
+}
+
+/* Glow effect */
+.pipboy-glow {
+  text-shadow: 0 0 10px var(--color-pipboy-glow),
+               0 0 20px var(--color-pipboy-glow),
+               0 0 30px var(--color-pipboy-glow);
+}
+
+.pipboy-border {
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 0 10px var(--color-pipboy-glow),
+              inset 0 0 10px var(--color-pipboy-glow);
+}
